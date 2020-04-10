@@ -131,7 +131,7 @@ def evolution(pop_, x, y):
     # the survival of the fittest theory.
     # Best genes from a population are picked and
     # mutated to form stronger generations
-    
+
     error_map = {}
     for idx, row in enumerate(pop_):
         rmse = np.sqrt(np.mean((y - function_to_fit(x, *row)) ** 2))
@@ -187,6 +187,3 @@ def main(given_param, x_data_lim, num_of_x, epochs):
     plt.title('Change in each gene RMSE over evolving population (epochs)')
     plt.show()
 
-
-if __name__ == "__main__":
-    main()
