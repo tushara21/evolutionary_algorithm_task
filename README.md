@@ -1,4 +1,4 @@
-## Additional Information
+## Evolutionary Algorithm
 ### Test Task
  Write own evolutionary algorithm to solve an optimization problem.
  
