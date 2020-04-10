@@ -6,6 +6,12 @@ import itertools
 
 
 def data_generator(n, data, al, be, ga, de):
+
+    # This function is used to generate ground
+    # truth data based on the given function
+    # First subplot is f(x) against the x value
+    # Second subplot is f(x) against the number of data generated
+
     fx = al + be * data + ga * (data ** 2) + de * (data ** 3)
 
     plt.subplot(1, 2, 1)
@@ -22,10 +28,20 @@ def data_generator(n, data, al, be, ga, de):
 
 
 def function_to_fit(x, a, b, c, d):
+
+    # This function defines the given
+    # polynomial function that needs to be fit
+
     return a + b * x + c * (x ** 2) + d * (x ** 3)
 
 
 def nlin_fitting(x, y):
+
+    # This function tries to fit the given
+    # non-linear function and find the best params
+    # This plots the original curve and the
+    # curve with stated params in question (all ones)
+
     init_vals = [1.0, 1.0, 1.0, 1.0]
     best_vals, covar = curve_fit(function_to_fit, x, y, p0=init_vals)
     print('Best parameters: {}'.format(best_vals))
@@ -42,6 +58,11 @@ def nlin_fitting(x, y):
 
 
 def make_mutative_array(init_, s):
+
+    # This function iteratively mutates
+    # successive generations
+    # of a gene passed (set of params)
+
     arr = []
     for i in range(len(s)):
         if i == 0:
@@ -52,10 +73,17 @@ def make_mutative_array(init_, s):
 
 
 def normpdf(bins, mu, sigma):
+
+    # Gives normal pdf for the data
+
     return 1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(- (bins - mu) ** 2 / (2 * sigma ** 2))
 
 
 def plot_histogram_subplots(mutated_parameters, mu, sigma, title_str):
+
+    # This plots the histogram subplots
+    # of iteratively mutated gene parameters
+
     fig = plt.figure()
     ax1 = fig.add_subplot(211)
     ax2 = fig.add_subplot(212)
@@ -72,6 +100,10 @@ def plot_histogram_subplots(mutated_parameters, mu, sigma, title_str):
 
 
 def gaussian_noise():
+
+    # This generates gaussian noise to then add to the
+    # gene parameters and plot them
+
     params = [0.0, 1.0]
     mu, sigma = 0.0, 0.1
     s = np.random.normal(mu, sigma, 100)
@@ -81,6 +113,10 @@ def gaussian_noise():
 
 
 def population_gen():
+
+    # Generates population of genes (population of size 100)
+    # can be further parameterized
+
     mu, sigma = 0.0, 1.0
     parameters = [np.random.normal(mu, sigma, 100) for i in range(4)]
     population = np.array(parameters).T
@@ -90,6 +126,12 @@ def population_gen():
 
 
 def evolution(pop_, x, y):
+
+    # Evolution of the generation of genes similar to
+    # the survival of the fittest theory.
+    # Best genes from a population are picked and
+    # mutated to form stronger generations
+    
     error_map = {}
     for idx, row in enumerate(pop_):
         rmse = np.sqrt(np.mean((y - function_to_fit(x, *row)) ** 2))
